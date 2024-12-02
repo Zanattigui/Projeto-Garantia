@@ -1,71 +1,27 @@
-#Criar uma cópia da planilha de garantia
-import os
-import json
-from tkinter import *
+garantias = [
+    {
+        'ID' : '0',
+        'nome' : 'Guilherme',
+    },
 
-ARQUIVO_JSON = 'garantias.json'
-#Função para carregar os dados do arquivo toda vez que inicializa o programa
-def carregar_dados():
-    """Carrega os dados do arquivo JSON ou retorna uma lista vazia."""
-    if os.path.exists(ARQUIVO_JSON):
-        with open(ARQUIVO_JSON, 'r') as file:
-            return json.load(file)
-    return []
+    {
+        'ID' : '1',
+        'nome' : 'Lucas',
+    }
+]
 
-garantias = carregar_dados()
 
-#Função para salvar dados
-def salvar_dados(dados):
-    """Salva os dados no arquivo JSON."""
-    with open(ARQUIVO_JSON, 'w') as file:
-        json.dump(dados, file, indent=4)
-
-#Lista aonde irá ficar as garantias:
-
-#Adicionar novo dicionario na lista
-#Função de adicionar nova garantia:
-def novaGarantia():
-    vendedor = input('Digite o vendedor: ')
-    pedido = input('Digite o N° do pedido: ')
-    codigo = input('Código da peça: ')
-    descricao = input('Digite o nome do produto: ')
-    quantidade = input('Digite a quantidade: ')
-    motivo = input('Digite o motivo da garantia: ')
-    garantias.append({
-        'ID' : len(garantias),
-        'Vendedor' : vendedor,
-        'Pedido' : pedido,
-        'Codigo' : codigo,
-        'Descricao' : descricao,
-        'Quantidade' : quantidade,
-        'Motivo' : motivo,
-        'Status' : 'Aguardando',
-        'Voucher' : 'Não gerado',
-    })
-    print('Garantia nova registrada! ID:', len(garantias)-1)
-    print(50 * '-')
-
-#Função de listar todas as garantias
-def listarGarantias():
-    print()
-    print('Listando todas as garantias')
-    for garantia in garantias:
-        print(50 * '-')
-        for chave, valor in garantia.items():
-            print(chave, ':' ,valor)    
-    print(50 * '-')
-
-#Função para atualizar dados da garantia
 def atualizarGarantia():
     listarGarantias()
     while True:
         try:
             contador = 0
+            Label(nova)
             id = input('Qual o ID da garantia que gostaria de alterar? ')
             id = int(id)
         except ValueError:
             print('Digite um ID válido!')
-        print(50 * '-')
+
 
         try:
             for chave, valor in garantias[id].items():
@@ -141,24 +97,3 @@ def atualizarGarantia():
                 continue
             print(50 * '-')
         break
-
-while True:
-    print("1) Registrar nova garantia")
-    print("2) Ver todas as garantias")
-    print("3) Atualizar garantia")
-    print("4) Sair")
-    acao = input("O que você precisa? ")
-    print(50 * '-')
-    print()
-    if acao == '1':
-        novaGarantia()
-        salvar_dados(garantias)
-    elif acao == '2':
-        listarGarantias()
-    elif acao == '3':
-        atualizarGarantia()
-        salvar_dados(garantias)
-    elif acao == '4':
-        print('Finalizando o programa')
-        break
-
