@@ -118,92 +118,84 @@ def listarGarantias():
 def atualizarGarantia():
     atualizar = Tk()
     atualizar.title('Atualizar garantia')
+    
+    #Titulo ID e Pedido:
+    tituloId = Label(atualizar, text='ID')
+    tituloId.grid(column=0, row= 0)
+    tituloPedido = Label(atualizar, text='Pedido')
+    tituloPedido.grid(column=1, row=0)
+    
+    #listando Id's e pedido para ver qual o ususario vai querer alterar:
+    linha = 1
+    for garantia in garantias:
+        id_label = Label(atualizar, text=garantia['ID'])
+        id_label.grid(column=0, row=linha)
+        pedido_label = Label(atualizar, text=garantia['Pedido'])
+        pedido_label.grid(column=1, row=linha)
+        linha += 1
 
-    listarGarantias()
-    while True:
-        try:
-            contador = 0
-            Label(atualizar, text='Qual o ID da garantia que gostaria de alterar?').grid(column=0, row=0)
-            entrada_id = Entry(atualizar)
-            entrada_id.grid(column=0, row=1)
-            entrada_id = int(id)
-        except ValueError:
-            print('Digite um ID válido!')
+    #Exibindo a caixa de pergunta e a caixa de resposta do usuario:
+    try:
+        Label(atualizar, text='Qual o ID da garantia que gostaria de alterar?').grid(column=0, row=linha)
+        entrada_id = Entry(atualizar)
+        entrada_id.grid(column=1, row=linha)
+    except ValueError:
+        Label(atualizar, text='Digite um ID válido.')
 
-        try:
-            for chave, valor in garantias[id].items():
-                print(contador, ')', chave, ':' ,valor)
-                contador += 1
-            alterar = input('Digite qual desses você quer alterar (Exceto o ID): ')
+    def enter_id():
+        atualizarDados = Tk()
+        atualizarDados.title('Atualizar dados')
 
-            if alterar == '1':
-                print('Vendedor atual:', garantias[id]['Vendedor'])
-                update = input('Para qual vendedor deseja alterar? ')
-                garantias[id]['Vendedor'] = update
-                print('Vendedor alterado com sucesso!')
-                print(50 * '-')
-                print()
-            if alterar == '2':
-                print('Pedido atual:', garantias[id]['Pedido'])
-                update = input('Para qual pedido deseja alterar? ')
-                garantias[id]['Pedido'] = update
-                print('Pedido alterado com sucesso!')
-                print(50 * '-')
-                print()
-            if alterar == '3':
-                print('Código atual:', garantias[id]['Codigo'])
-                update = input('Para qual Código deseja alterar? ')
-                garantias[id]['Codigo'] = update
-                print('Código alterado com sucesso!')
-                print(50 * '-')
-                print()
-            if alterar == '4':
-                print('Descrição atual:', garantias[id]['Descricao'])
-                update = input('Para qual descrição deseja alterar? ')
-                garantias[id]['Descricao'] = update
-                print('Descrição alterado com sucesso!')
-                print(50 * '-')
-                print()
-            if alterar == '5':
-                print('Quantidade atual:', garantias[id]['Quantidade'])
-                update = input('Para qual quantidade deseja alterar? ')
-                garantias[id]['Quantidade'] = update
-                print('Quantidade alterado com sucesso!')
-                print(50 * '-')
-                print()
-            if alterar == '6':
-                print('Motivo atual:', garantias[id]['Motivo'])
-                update = input('Para qual motivo deseja alterar? ')
-                garantias[id]['Motivo'] = update
-                print('Motivo alterado com sucesso!')
-                print(50 * '-')
-                print()
-            if alterar == '7':
-                print('Status atual:', garantias[id]['Status'])
-                update = input('Para qual status deseja alterar? ')
-                garantias[id]['Status'] = update
-                print('Status alterado com sucesso!')
-                print(50 * '-')
-                print()        
-            if alterar == '8':
-                print('Status do voucher atual:', garantias[id]['Voucher'])
-                update = input('Para qual status deseja alterar? ')
-                garantias[id]['Voucher'] = update
-                print('Status do voucher alterado com sucesso!')
-                print(50 * '-')
-                print()
-        except:
-            print('Erro!')
-            print('IDs válidos:')
-            contagem = len(garantias) - 1
-            print(contagem)
-            for id in garantias:
-                contagem -= 1
-                if contagem != -1:
-                    print(contagem)
-                continue
-            print(50 * '-')
-        break
+        #Transformando em inteiro para poder puxar por indice no dicionario:
+        int_id = entrada_id.get()
+        int_id = int(int_id)
+
+        #Titulos
+        tituloId = Label(atualizarDados, text='ID')
+        tituloId.grid(column=0, row= 0)
+        tituloVendedor = Label(atualizarDados, text='Vendedor')
+        tituloVendedor.grid(column=1, row= 0)
+        tituloPedido = Label(atualizarDados, text='Pedido')
+        tituloPedido.grid(column=2, row= 0)
+        tituloCodigo = Label(atualizarDados, text='Código')
+        tituloCodigo.grid(column=3, row= 0)
+        tituloDescricao = Label(atualizarDados, text='Descrição')
+        tituloDescricao.grid(column=4, row= 0)
+        tituloQuantidade = Label(atualizarDados, text='Quantidade')
+        tituloQuantidade.grid(column=5, row= 0)
+        tituloMotivo = Label(atualizarDados, text='Motivo')
+        tituloMotivo.grid(column=6, row= 0)
+        tituloStatus = Label(atualizarDados, text='Status')
+        tituloStatus.grid(column=7, row= 0)
+        tituloVoucher = Label(atualizarDados, text='Voucher')
+        tituloVoucher.grid(column=8, row= 0)
+
+        #Valores:
+        id_label = Label(atualizarDados, text=garantias[int_id]['ID'])
+        id_label.grid(column=0, row=1)
+        vendedor_label = Label(atualizarDados, text=garantias[int_id]['Vendedor'])
+        vendedor_label.grid(column=1, row=1)
+        pedido_label = Label(atualizarDados, text=garantias[int_id]['Pedido'])
+        pedido_label.grid(column=2, row=1)
+        codigo_label = Label(atualizarDados, text=garantias[int_id]['Codigo'])
+        codigo_label.grid(column=3, row=1)
+        descricao_label = Label(atualizarDados, text=garantias[int_id]['Descricao'])
+        descricao_label.grid(column=4, row=1)
+        quantidade_label = Label(atualizarDados, text=garantias[int_id]['Quantidade'])
+        quantidade_label.grid(column=5, row=1)
+        motivo_label = Label(atualizarDados, text=garantias[int_id]['Motivo'])
+        motivo_label.grid(column=6, row=1)
+        status_label = Label(atualizarDados, text=garantias[int_id]['Status'])
+        status_label.grid(column=7, row=1)
+        voucher_label = Label(atualizarDados, text=garantias[int_id]['Voucher'])
+        voucher_label.grid(column=8, row=1)
+
+        atualizar.destroy()
+    linha += 1    
+    Button(atualizar, text='Enter', command=enter_id).grid(columnspan=4, row=linha)
+    
+    #Criar caixa de pergunta para ver qual desses ele irá mudar!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 principal = Tk()
 #Titulo da janela:
