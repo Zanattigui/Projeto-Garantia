@@ -134,87 +134,211 @@ def atualizarGarantia():
         pedido_label.grid(column=1, row=linha)
         linha += 1
 
-    #Exibindo a caixa de pergunta e a caixa de resposta do usuario:
+    #Exibindo a caixa de pergunta para ver qual o id da garantia o usuario quer mexer:
     try:
         Label(atualizar, text='Qual o ID da garantia que gostaria de alterar?').grid(column=0, row=linha)
+        #Caixa de entrada de texto para informar o ID
         entrada_id = Entry(atualizar)
         entrada_id.grid(column=1, row=linha)
+    #Caso digite um ID invalido:
     except ValueError:
         Label(atualizar, text='Digite um ID válido.')
 
+    #Função para abrir nova janela e mudar algum item da garantia
     def enter_id():
         atualizarDados = Tk()
         atualizarDados.title('Atualizar dados')
 
+        #Função para alterar vendedor:
+        def mudando_vendedor():
+            #Caixa perguntando qual vendedor vai alterar:
+            Label(atualizarDados, text='Para qual vendedor deseja alterar?').grid(column=0, row=10)
+            #Variavel criada para guardar o dado que o usuario inserir
+            alterar_item = Entry(atualizarDados)
+            alterar_item.grid(column=1, row=10)
+
+            #Função para salvar mudança de vendedor:
+            def salvar_vendedor():
+                #Variavel criada para armazenar a entrada em alterar_item, utilizando o metodo .get() para pegar o valor de alterar_item
+                update = alterar_item.get()    
+                #Alterando vendedor com 'update'
+                garantias[int_id]['Vendedor'] = update
+                Label(atualizarDados, text='Vendedor alterado para:').grid(column=0, row=11)
+                Label(atualizarDados, text=garantias[int_id]['Vendedor']).grid(column=1,row=11)
+
+            #Botao para chamar a função "salvar_vendedor"
+            Button(atualizarDados, text= 'salvar', command=salvar_vendedor).grid(column=2, row=10)
+        #Função para alterar pedido
+        def mudando_pedido():
+
+            Label(atualizarDados, text='Para qual pedido deseja alterar?').grid(column=0, row=10)
+
+            alterar_item = Entry(atualizarDados)
+            alterar_item.grid(column=1, row=10)
+
+            def salvar_pedido():
+
+                update = alterar_item.get()    
+                garantias[int_id]['Pedido'] = update
+
+                Label(atualizarDados, text='Pedido alterado para:').grid(column=0, row=11)
+                Label(atualizarDados, text=garantias[int_id]['Pedido']).grid(column=1,row=11)
+
+            Button(atualizarDados, text= 'salvar', command=salvar_pedido).grid(column=2, row=10)
+        #Função para alterar código
+        def mudando_codigo():
+
+            Label(atualizarDados, text='Para qual código deseja alterar?').grid(column=0, row=10)
+
+            alterar_item = Entry(atualizarDados)
+            alterar_item.grid(column=1, row=10)
+
+            def salvar_codigo():
+
+                update = alterar_item.get()    
+                garantias[int_id]['Codigo'] = update
+
+                Label(atualizarDados, text='Código alterado para:').grid(column=0, row=11)
+                Label(atualizarDados, text=garantias[int_id]['Codigo']).grid(column=1,row=11)
+
+            Button(atualizarDados, text= 'salvar', command=salvar_codigo).grid(column=2, row=10)       
+        #Função para alterar descrição   
+        def mudando_descricao():
+
+            Label(atualizarDados, text='Para qual descrição deseja alterar?').grid(column=0, row=10)
+
+            alterar_item = Entry(atualizarDados)
+            alterar_item.grid(column=1, row=10)
+
+            def salvar_descricao():
+
+                update = alterar_item.get()    
+                garantias[int_id]['Descricao'] = update
+
+                Label(atualizarDados, text='Descrição alterado para:').grid(column=0, row=11)
+                Label(atualizarDados, text=garantias[int_id]['Descricao']).grid(column=1,row=11)
+
+            Button(atualizarDados, text= 'Salvar', command=salvar_descricao).grid(column=2, row=10)             
+        #Função para alterar quantidade        
+        def mudando_quantidade():
+
+            Label(atualizarDados, text='Para qual quantidade deseja alterar?').grid(column=0, row=10)
+
+            alterar_item = Entry(atualizarDados)
+            alterar_item.grid(column=1, row=10)
+
+            def salvar_quantidade():
+
+                update = alterar_item.get()    
+                garantias[int_id]['Quantidade'] = update
+
+                Label(atualizarDados, text='Quantidade alterado para:').grid(column=0, row=11)
+                Label(atualizarDados, text=garantias[int_id]['Quantidade']).grid(column=1,row=11)
+
+            Button(atualizarDados, text= 'Salvar', command=salvar_quantidade).grid(column=2, row=10)                    
+        #Função para alterar motivo        
+        def mudando_motivo():
+
+            Label(atualizarDados, text='Para qual motivo deseja alterar?').grid(column=0, row=10)
+
+            alterar_item = Entry(atualizarDados)
+            alterar_item.grid(column=1, row=10)
+
+            def salvar_motivo():
+
+                update = alterar_item.get()    
+                garantias[int_id]['Motivo'] = update
+
+                Label(atualizarDados, text='Motivo alterado para:').grid(column=0, row=11)
+                Label(atualizarDados, text=garantias[int_id]['Motivo']).grid(column=1,row=11)
+
+            Button(atualizarDados, text= 'Salvar', command=salvar_motivo).grid(column=2, row=10)            
+        #Função para alterar status       
+        def mudando_status():
+
+            Label(atualizarDados, text='Para qual status deseja alterar?').grid(column=0, row=10)
+
+            alterar_item = Entry(atualizarDados)
+            alterar_item.grid(column=1, row=10)
+
+            def salvar_status():
+
+                update = alterar_item.get()    
+                garantias[int_id]['Status'] = update
+
+                Label(atualizarDados, text='Status alterado para:').grid(column=0, row=11)
+                Label(atualizarDados, text=garantias[int_id]['Status']).grid(column=1,row=11)
+
+            Button(atualizarDados, text= 'Salvar', command=salvar_status).grid(column=2, row=10)            
+        #Função para alterar voucher        
+        def mudando_voucher():
+
+            Label(atualizarDados, text='Para qual voucher deseja alterar?').grid(column=0, row=10)
+
+            alterar_item = Entry(atualizarDados)
+            alterar_item.grid(column=1, row=10)
+
+            def salvar_voucher():
+
+                update = alterar_item.get()    
+                garantias[int_id]['Voucher'] = update
+
+                Label(atualizarDados, text='Voucher alterado para:').grid(column=0, row=11)
+                Label(atualizarDados, text=garantias[int_id]['Voucher']).grid(column=1,row=11)
+
+            Button(atualizarDados, text= 'Salvar', command=salvar_voucher).grid(column=2, row=10)    
+        
         #Transformando em inteiro para poder puxar por indice no dicionario:
-        int_id = entrada_id.get()
-        int_id = int(int_id)
+
+        try:
+            int_id = int(entrada_id.get())
+        except ValueError:
+            Label(atualizar, text="Erro: Digite um número válido para o ID.").grid(column=0, row=linha+1)
+            return
+
+        Label(atualizarDados, text='Clique em qual gostaria de alterar:').grid(column=0, columnspan=1, row=0)
 
         #Titulos
         tituloId = Label(atualizarDados, text='ID:')
-        tituloId.grid(column=1, row= 0)
-        tituloVendedor = Label(atualizarDados, text='1) Vendedor:')
-        tituloVendedor.grid(column=1, row= 1)
-        tituloPedido = Label(atualizarDados, text='2) Pedido:')
-        tituloPedido.grid(column=1, row= 2)
-        tituloCodigo = Label(atualizarDados, text='3) Código:')
-        tituloCodigo.grid(column=1, row= 3)
-        tituloDescricao = Label(atualizarDados, text='4) Descrição:')
-        tituloDescricao.grid(column=1, row= 4)
-        tituloQuantidade = Label(atualizarDados, text='5) Quantidade:')
-        tituloQuantidade.grid(column=1, row= 5)
-        tituloMotivo = Label(atualizarDados, text='6) Motivo:')
-        tituloMotivo.grid(column=1, row= 6)
-        tituloStatus = Label(atualizarDados, text='7) Status:')
-        tituloStatus.grid(column=1, row= 7)
-        tituloVoucher = Label(atualizarDados, text='8) Voucher:')
-        tituloVoucher.grid(column=1, row= 8)
+        tituloId.grid(column=0, row= 1)
+        tituloVendedor = Button(atualizarDados, text='1) Vendedor:', command=mudando_vendedor)
+        tituloVendedor.grid(column=0, row= 2)
+        tituloPedido = Button(atualizarDados, text='2) Pedido:', command=mudando_pedido)
+        tituloPedido.grid(column=0, row= 3)
+        tituloCodigo = Button(atualizarDados, text='3) Código:', command=mudando_codigo)
+        tituloCodigo.grid(column=0, row= 4)
+        tituloDescricao = Button(atualizarDados, text='4) Descrição:', command=mudando_descricao)
+        tituloDescricao.grid(column=0, row= 5)
+        tituloQuantidade = Button(atualizarDados, text='5) Quantidade:', command=mudando_quantidade)
+        tituloQuantidade.grid(column=0, row=6)
+        tituloMotivo = Button(atualizarDados, text='6) Motivo:', command=mudando_motivo)
+        tituloMotivo.grid(column=0, row= 7)
+        tituloStatus = Button(atualizarDados, text='7) Status:', command=mudando_status)
+        tituloStatus.grid(column=0, row= 8)
+        tituloVoucher = Button(atualizarDados, text='8) Voucher:', command=mudando_voucher)
+        tituloVoucher.grid(column=0, row= 9)
 
         #Valores:
         id_label = Label(atualizarDados, text=garantias[int_id]['ID'])
-        id_label.grid(column=2, row=0)
+        id_label.grid(column=1, row=1)
         vendedor_label = Label(atualizarDados, text=garantias[int_id]['Vendedor'])
-        vendedor_label.grid(column=2, row=1)
+        vendedor_label.grid(column=1, row=2)
         pedido_label = Label(atualizarDados, text=garantias[int_id]['Pedido'])
-        pedido_label.grid(column=2, row=2)
+        pedido_label.grid(column=1, row=3)
         codigo_label = Label(atualizarDados, text=garantias[int_id]['Codigo'])
-        codigo_label.grid(column=2, row=3)
+        codigo_label.grid(column=1, row=4)
         descricao_label = Label(atualizarDados, text=garantias[int_id]['Descricao'])
-        descricao_label.grid(column=2, row=4)
+        descricao_label.grid(column=1, row=5)
         quantidade_label = Label(atualizarDados, text=garantias[int_id]['Quantidade'])
-        quantidade_label.grid(column=2, row=5)
+        quantidade_label.grid(column=1, row=6)
         motivo_label = Label(atualizarDados, text=garantias[int_id]['Motivo'])
-        motivo_label.grid(column=2, row=6)
+        motivo_label.grid(column=1, row=7)
         status_label = Label(atualizarDados, text=garantias[int_id]['Status'])
-        status_label.grid(column=2, row=7)
+        status_label.grid(column=1, row=8)
         voucher_label = Label(atualizarDados, text=garantias[int_id]['Voucher'])
-        voucher_label.grid(column=2, row=8)
+        voucher_label.grid(column=1, row=9)
         #Fecha a aba "Atualizar":
         atualizar.destroy()
-        
-        
-        def enter_item():
-            alterando_item = Tk()
-            alterando_item.title('Alterando item')
-            #Se alterar item for igual a 1 entao tem que aparecer uma caixinha com o atual vendedor
-            if alterar_item == 1:
-                Label(alterando_item, text='Vendedor atual:').grid(column=0, row=0)
-                Label(alterando_item, text=garantias[int_id]['Vendedor']).grid(column=1, row=0)
-                Label(alterando_item, text='Para qual vendedor deseja alterar?').grid(column=0, row=1)
-                update = Entry(alterando_item)
-                update.grid(colum=1, row=1)               
-                garantias[int_id]['Vendedor'] = update
-                Label(alterando_item, text='Vendedor alterado para:').grid(column=0, row=2)
-                Label(alterando_item, text=garantias[int_id]['Vendedor']).grid(column=1, row=2)
-
-        alterar_item = Entry(atualizarDados)
-        alterar_item.grid(column=2, row=9)
-
-        Button(atualizarDados, text='Enter', command=enter_item).grid(column=3, row=9)
-
-        Label(atualizarDados, text='Qual item gostaria de alterar?').grid(column=0, columnspan=2, row=9)
-
-
 
 
     linha += 1
