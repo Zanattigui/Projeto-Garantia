@@ -70,55 +70,29 @@ def listarGarantias():
 
     todasAsGarantias = Tk()
     todasAsGarantias.title('Todas as garantias')
-
+    row = 0
+    column = 0
     #Titulos
-    tituloId = Label(todasAsGarantias, text='ID')
-    tituloId.grid(column=0, row= 0)
-    tituloVendedor = Label(todasAsGarantias, text='Vendedor')
-    tituloVendedor.grid(column=1, row= 0)
-    tituloPedido = Label(todasAsGarantias, text='Pedido')
-    tituloPedido.grid(column=2, row= 0)
-    tituloCodigo = Label(todasAsGarantias, text='Código')
-    tituloCodigo.grid(column=3, row= 0)
-    tituloDescricao = Label(todasAsGarantias, text='Descrição')
-    tituloDescricao.grid(column=4, row= 0)
-    tituloQuantidade = Label(todasAsGarantias, text='Quantidade')
-    tituloQuantidade.grid(column=5, row= 0)
-    tituloMotivo = Label(todasAsGarantias, text='Motivo')
-    tituloMotivo.grid(column=6, row= 0)
-    tituloStatus = Label(todasAsGarantias, text='Status')
-    tituloStatus.grid(column=7, row= 0)
-    tituloVoucher = Label(todasAsGarantias, text='Voucher')
-    tituloVoucher.grid(column=8, row= 0)
-
+    keyList = list(garantias[0].keys())
+    for key in keyList:
+        tituloId = Label(todasAsGarantias, text=key)
+        tituloId.grid(column=column, row= row)
+        column += 1
     #Listando os valores das garantias
-    linha = 1
-    for garantia in garantias:
-        id_label = Label(todasAsGarantias, text=garantia['ID'])
-        id_label.grid(column=0, row=linha)
-        vendedor_label = Label(todasAsGarantias, text=garantia['Vendedor'])
-        vendedor_label.grid(column=1, row=linha)
-        pedido_label = Label(todasAsGarantias, text=garantia['Pedido'])
-        pedido_label.grid(column=2, row=linha)
-        codigo_label = Label(todasAsGarantias, text=garantia['Codigo'])
-        codigo_label.grid(column=3, row=linha)
-        descricao_label = Label(todasAsGarantias, text=garantia['Descricao'])
-        descricao_label.grid(column=4, row=linha)
-        quantidade_label = Label(todasAsGarantias, text=garantia['Quantidade'])
-        quantidade_label.grid(column=5, row=linha)
-        motivo_label = Label(todasAsGarantias, text=garantia['Motivo'])
-        motivo_label.grid(column=6, row=linha)
-        status_label = Label(todasAsGarantias, text=garantia['Status'])
-        status_label.grid(column=7, row=linha)
-        voucher_label = Label(todasAsGarantias, text=garantia['Voucher'])
-        voucher_label.grid(column=8, row=linha)
-        linha += 1
-
+    row = 1
+    column = 0
+    for key in keyList:
+        for garantia in garantias:
+            id_label = Label(todasAsGarantias, text=garantia[key])
+            id_label.grid(column=column, row=row)
+            row += 1 
+        column += 1
+        row = 1
 #Função para atualizar dados da garantia
 def atualizarGarantia():
+    
     atualizar = Tk()
     atualizar.title('Atualizar garantia')
-    
     #Titulo ID e Pedido:
     tituloId = Label(atualizar, text='ID')
     tituloId.grid(column=0, row= 0)
@@ -288,8 +262,8 @@ def atualizarGarantia():
 
             Button(atualizarDados, text= 'Salvar', command=salvar_voucher).grid(column=2, row=10)    
         
+       
         #Transformando em inteiro para poder puxar por indice no dicionario:
-
         try:
             int_id = int(entrada_id.get())
         except ValueError:
