@@ -2,6 +2,7 @@
 import os
 import json
 from tkinter import *
+from datetime import datetime, timedelta
 
 ARQUIVO_JSON = 'garantias.json'
 #Função para carregar os dados do arquivo toda vez que inicializa o programa
@@ -29,7 +30,7 @@ def novaGarantia():
     column = 0
     #Titulos utilizando uma limitação para puxar somente até o indice 6 ([:6])
     keyList = list(garantias[0].keys())
-    for key in keyList[:6]:
+    for key in keyList[1:7]:
         tituloId = Label(nova, text=key)
         tituloId.grid(column=column, row= row)
         row += 1
@@ -55,6 +56,11 @@ def novaGarantia():
     entrada_motivo.grid(column=1, row=5)
 
     def salvar():
+
+        dataEntrada = datetime.today().strftime('%d-%m-%Y')  # Data atual no formato YYYY-MM-DD
+        prazoFinal = (datetime.today() + timedelta(days=30)).strftime('%d-%m-%Y')  # Adiciona 30 dias
+
+
         garantias.append({
             'ID' : len(garantias),
             'Vendedor' : entrada_vendedor.get(), #Usando o metodo .get para pegar o que esta dentro do entrada_vendedor
@@ -65,6 +71,8 @@ def novaGarantia():
             'Motivo' : entrada_motivo.get(),
             'Status' : 'Aguardando',
             'Voucher' : 'Não gerado',
+            'Data de entrada' : dataEntrada,
+            'Prazo' : prazoFinal,
         })
         salvar_dados(garantias)
         nova.destroy()
@@ -151,33 +159,37 @@ def atualizarGarantia():
             id_label.grid(column=1, row=row)
             row += 1
 
-        Label(atualizarDados, text='Digite o numero do item que deseja alterar:').grid(column=0, row=9)
+        Label(atualizarDados, text='Digite o numero do item que deseja alterar:').grid(column=0, row=10)
         atualizationId = Entry(atualizarDados)
-        atualizationId.grid(column=1, row=9)
+        atualizationId.grid(column=1, row=10)
         
-        def atualizationValue ():
+        try:
+            def atualizationValue ():
 
-            id_key = int(atualizationId.get())
-            id_key = keyList[id_key]
-            #Função para alterar pedido
-            Label(atualizarDados, text=f'Para qual {id_key} deseja alterar?').grid(column=0, row=11)
+                id_key = int(atualizationId.get())
+                id_key = keyList[id_key]
+                #Função para alterar pedido
+                Label(atualizarDados, text=f'Alterar {id_key} de "{garantia[id_key]}" para?').grid(column=0, row=11)
 
-            alterar_item = Entry(atualizarDados)
-            alterar_item.grid(column=1, row=11)
-            
-            #Função de salvar a atualização
-            def atualizationSave():
-                update = alterar_item.get()    
-                garantias[int_id][id_key] = update
+                alterar_item = Entry(atualizarDados)
+                alterar_item.grid(column=1, row=11)
+                
+                #Função de salvar a atualização
+                def atualizationSave():
+                    update = alterar_item.get()    
+                    garantias[int_id][id_key] = update
 
-                Label(atualizarDados, text=f'{id_key} alterado para:').grid(column=0, row=12)
-                Label(atualizarDados, text=garantias[int_id][id_key]).grid(column=1,row=12)
-                Label(atualizarDados, text= 'Essa janela irá fechar automaticamente após 5 segundos!').grid(columnspan=3 , row=13)
-                atualizarDados.after(5000, atualizarDados.destroy)
-            #Botao de salvar apos alterado
-            Button(atualizarDados, text= 'Salvar', command=atualizationSave).grid(column=2, row=11)
-        
-        Button(atualizarDados, text='Enter', command=atualizationValue).grid(columnspan=2, row=10)
+                    Label(atualizarDados, text=f'{id_key} alterado para:').grid(column=0, row=12)
+                    Label(atualizarDados, text=garantias[int_id][id_key]).grid(column=1,row=12)
+                    Label(atualizarDados, text= 'Essa janela irá fechar automaticamente após 5 segundos!').grid(columnspan=3 , row=13)
+                    atualizarDados.after(5000, atualizarDados.destroy)
+                #Botao de salvar apos alterado
+                Button(atualizarDados, text= 'Salvar', command=atualizationSave).grid(column=2, row=11)
+        except (IndexError, ValueError):
+            Label(atualizarDados, text='Número de item inválido.')
+
+
+        Button(atualizarDados, text='Enter', command=atualizationValue).grid(column=2, row=10)
 
 
         #Fecha a aba "Atualizar":
